@@ -1,6 +1,7 @@
+import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'wallet_provider.dart';
+import 'provider/wallet_provider.dart';
 
 void main() {
   runApp(
@@ -16,49 +17,12 @@ class CryptoFlare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final walletProvider = Provider.of<WalletProvider>(context);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'CryptoFlare Wallet',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.blueAccent,
-        ),
-        body: SafeArea(
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                final mnemonic = walletProvider.generateMnemonic();
-                final privateKey = await walletProvider.getPrivateKey(mnemonic);
-                final publicKey = await walletProvider.getPublicKey(privateKey);
-
-                print('Mnemonic: $mnemonic');
-                print('Private Key: $privateKey');
-                print('Public Key: $publicKey');
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
-              ),
-              child: const Text(
-                'Generate Wallet',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-      ),
+      initialRoute: LandingScreen.id,
+      routes: {
+        LandingScreen.id: (context) => const LandingScreen(),
+      },
     );
   }
 }

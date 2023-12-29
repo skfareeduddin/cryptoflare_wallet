@@ -3,6 +3,7 @@ import 'package:web3dart/web3dart.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
 import 'package:hex/hex.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class WalletAddressService {
   String generateMnemonic();
@@ -11,6 +12,19 @@ abstract class WalletAddressService {
 }
 
 class WalletProvider extends ChangeNotifier implements WalletAddressService {
+  String? privateKey;
+
+  Future<void> setPrivateKey(String privateKey) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('privateKey', privateKey);
+    notifyListeners();
+  }
+
+  Future<void> loadPrivateKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    privateKey = prefs.getString('privateKey');
+  }
+
   @override
   String generateMnemonic() {
     return bip39.generateMnemonic();
