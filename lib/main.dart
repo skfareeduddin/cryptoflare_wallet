@@ -1,3 +1,4 @@
+import 'package:cryptoflare_wallet/pages/generate_mnemonic_screen.dart';
 import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class CryptoFlare extends StatelessWidget {
       initialRoute: LandingScreen.id,
       routes: {
         LandingScreen.id: (context) => const LandingScreen(),
+        GenerateMnemonicScreen.id: (context) => const GenerateMnemonicScreen(),
       },
     );
   }
