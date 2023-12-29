@@ -12,11 +12,32 @@ class CryptoFlare extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'CryptoFlare Wallet',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent,
+        ),
         body: SafeArea(
           child: Center(
             child: ElevatedButton(
               onPressed: () {},
-              child: const Text('Generate Wallet'),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    ),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
+              ),
+              child: const Text(
+                'Generate Wallet',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
