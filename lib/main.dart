@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'wallet_provider.dart';
 
 void main() {
-  runApp(const CryptoFlare());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => WalletProvider(),
+      child: const CryptoFlare(),
+    ),
+  );
 }
 
 class CryptoFlare extends StatelessWidget {
@@ -9,6 +16,8 @@ class CryptoFlare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final walletProvider = Provider.of<WalletProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -23,7 +32,15 @@ class CryptoFlare extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final mnemonic = walletProvider.generateMnemonic();
+                final privateKey = await walletProvider.getPrivateKey(mnemonic);
+                final publicKey = await walletProvider.getPublicKey(privateKey);
+
+                print('Mnemonic: $mnemonic');
+                print('Private Key: $privateKey');
+                print('Public Key: $publicKey');
+              },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   const RoundedRectangleBorder(
