@@ -1,12 +1,50 @@
+import 'package:cryptoflare_wallet/pages/wallet_screen.dart';
+import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class VerifyMnemonicScreen extends StatelessWidget {
-  const VerifyMnemonicScreen({super.key});
+class VerifyMnemonicScreen extends StatefulWidget {
+  const VerifyMnemonicScreen({super.key, required this.mnemonic});
+
+  final String mnemonic;
 
   static const id = 'verify_mnemonic_screen';
 
   @override
+  State<VerifyMnemonicScreen> createState() => _VerifyMnemonicScreenState();
+}
+
+class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
+  bool isVerified = false;
+  String verificationText = '';
+
+  void verifyMnemonic() {
+    final walletProvider = Provider.of<WalletProvider>(context, listen: false);
+
+    if (verificationText.trim() == widget.mnemonic.trim()) {
+      walletProvider.getPrivateKey(widget.mnemonic).then((privateKey) {
+        setState(() {
+          isVerified = true;
+          print('Mnemonic Verified');
+        });
+      });
+    }
+    print(verificationText);
+    print(widget.mnemonic);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    void navigateToWallet() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WalletPage(),
+        ),
+      );
+      print('Go to wallet');
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -38,8 +76,13 @@ class VerifyMnemonicScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    verificationText = value;
+                  });
+                },
+                decoration: const InputDecoration(
                   labelText: 'Enter Mnemonic Phrase',
                   labelStyle: TextStyle(
                     color: Colors.grey,
@@ -52,7 +95,9 @@ class VerifyMnemonicScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 30.0,
                 child: ElevatedButton(
-                  onPressed: () async {},
+                  onPressed: () {
+                    verifyMnemonic();
+                  },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       const RoundedRectangleBorder(
@@ -75,21 +120,14 @@ class VerifyMnemonicScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 30.0,
                 child: ElevatedButton(
-                  onPressed: () async {},
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all(Colors.white60),
+                  onPressed: () {
+                    isVerified ? navigateToWallet() : null;
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
                   ),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  child: const Text('Next'),
                 ),
               ),
             ],

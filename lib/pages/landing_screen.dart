@@ -24,9 +24,12 @@ class LandingScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30.0),
-              SvgPicture.asset(
-                'assets/flutter_logo.svg',
-                width: 80.0,
+              // SvgPicture.asset(
+              //   'assets/flutter_logo.svg',
+              //   width: 80.0,
+              // ),
+              const FlutterLogo(
+                size: 100.0,
               ),
               const SizedBox(height: 40.0),
               SizedBox(
