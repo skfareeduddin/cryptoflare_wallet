@@ -1,3 +1,4 @@
+import 'package:cryptoflare_wallet/pages/verify_mnemonic_screen.dart';
 import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,8 +24,10 @@ class GenerateMnemonicScreen extends StatelessWidget {
         ),
       );
 
-      // TODO: Create verify mnemonic page and complete navigation.
-      // Navigator.pushNamed(context, routeName);
+      Navigator.pushNamed(
+        context,
+        VerifyMnemonicScreen.id,
+      );
     }
 
     return Scaffold(
