@@ -47,6 +47,8 @@ class GenerateMnemonicScreen extends StatelessWidget {
         ),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
+        elevation: 5.0,
+        shadowColor: Colors.grey,
       ),
       body: SafeArea(
         child: Padding(

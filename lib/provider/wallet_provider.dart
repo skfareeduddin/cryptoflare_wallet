@@ -36,6 +36,8 @@ class WalletProvider extends ChangeNotifier implements WalletAddressService {
     final master = await ED25519_HD_KEY.getMasterKeyFromSeed(seed);
     final privateKey = HEX.encode(master.key);
 
+    await setPrivateKey(privateKey);
+
     return privateKey;
   }
 
