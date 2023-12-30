@@ -1,4 +1,5 @@
 import 'package:cryptoflare_wallet/pages/generate_mnemonic_screen.dart';
+import 'package:cryptoflare_wallet/pages/import_wallet_screen.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -61,7 +62,9 @@ class LandingScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () async {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, ImportWalletScreen.id);
+                  },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       const RoundedRectangleBorder(

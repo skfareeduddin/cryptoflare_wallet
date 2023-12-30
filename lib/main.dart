@@ -1,4 +1,5 @@
 import 'package:cryptoflare_wallet/pages/generate_mnemonic_screen.dart';
+import 'package:cryptoflare_wallet/pages/import_wallet_screen.dart';
 import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:cryptoflare_wallet/pages/verify_mnemonic_screen.dart';
 import 'package:cryptoflare_wallet/pages/wallet_screen.dart';
@@ -29,6 +30,7 @@ class CryptoFlare extends StatelessWidget {
         VerifyMnemonicScreen.id: (context) =>
             const VerifyMnemonicScreen(mnemonic: ''),
         WalletPage.id: (context) => const WalletPage(),
+        ImportWalletScreen.id: (context) => const ImportWalletScreen(),
       },
     );
   }

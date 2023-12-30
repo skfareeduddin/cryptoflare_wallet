@@ -1,50 +1,17 @@
-import 'package:cryptoflare_wallet/pages/wallet_screen.dart';
-import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class VerifyMnemonicScreen extends StatefulWidget {
-  const VerifyMnemonicScreen({super.key, required this.mnemonic});
+class ImportWalletScreen extends StatefulWidget {
+  const ImportWalletScreen({super.key});
 
-  final String mnemonic;
-
-  static const id = 'verify_mnemonic_screen';
+  static const id = 'import_from_seed';
 
   @override
-  State<VerifyMnemonicScreen> createState() => _VerifyMnemonicScreenState();
+  State<ImportWalletScreen> createState() => _ImportWalletScreenState();
 }
 
-class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
-  bool isVerified = false;
-  String verificationText = '';
-
-  void verifyMnemonic() {
-    final walletProvider = Provider.of<WalletProvider>(context, listen: false);
-
-    if (verificationText.trim() == widget.mnemonic.trim()) {
-      walletProvider.getPrivateKey(widget.mnemonic).then((privateKey) {
-        setState(() {
-          isVerified = true;
-          print('Mnemonic Verified');
-        });
-      });
-    }
-    print(verificationText);
-    print(widget.mnemonic);
-  }
-
+class _ImportWalletScreenState extends State<ImportWalletScreen> {
   @override
   Widget build(BuildContext context) {
-    void navigateToWallet() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const WalletPage(),
-        ),
-      );
-      print('Go to wallet');
-    }
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,7 +22,7 @@ class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
           color: Colors.white,
         ),
         title: const Text(
-          'Verify Mnemonic',
+          'Import Wallet',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -71,7 +38,7 @@ class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Please enter your mnemonic phrase:',
+                'Please verify your mnemonic phrase:',
                 style: TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.bold,
@@ -80,9 +47,7 @@ class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
               const SizedBox(height: 10.0),
               TextField(
                 onChanged: (value) {
-                  setState(() {
-                    verificationText = value;
-                  });
+                  setState(() {});
                 },
                 decoration: const InputDecoration(
                   labelText: 'Enter Mnemonic Phrase',
@@ -97,9 +62,7 @@ class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
                 width: double.infinity,
                 height: 30.0,
                 child: ElevatedButton(
-                  onPressed: () {
-                    verifyMnemonic();
-                  },
+                  onPressed: () {},
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       const RoundedRectangleBorder(
@@ -112,29 +75,9 @@ class _VerifyMnemonicScreenState extends State<VerifyMnemonicScreen> {
                         MaterialStateProperty.all(Colors.blueAccent),
                   ),
                   child: const Text(
-                    'Verify',
+                    'Import',
                     style: TextStyle(color: Colors.white),
                   ),
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              SizedBox(
-                width: double.infinity,
-                height: 30.0,
-                child: ElevatedButton(
-                  onPressed: () {
-                    isVerified ? navigateToWallet() : null;
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
-                    ),
-                  ),
-                  child: const Text('Next'),
                 ),
               ),
             ],
