@@ -1,4 +1,7 @@
+import 'package:cryptoflare_wallet/pages/wallet_screen.dart';
+import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ImportWalletScreen extends StatefulWidget {
   const ImportWalletScreen({super.key});
@@ -10,8 +13,23 @@ class ImportWalletScreen extends StatefulWidget {
 }
 
 class _ImportWalletScreenState extends State<ImportWalletScreen> {
+  bool isVerified = false;
+  String verificationText = '';
+
+  void navigateToWallet() {
+    Navigator.pushNamed(context, WalletPage.id);
+  }
+
   @override
   Widget build(BuildContext context) {
+    void verifyMnemonic() async {
+      final walletProvider =
+          Provider.of<WalletProvider>(context, listen: false);
+      final privateKey = await walletProvider.getPrivateKey(verificationText);
+
+      navigateToWallet();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,7 +65,9 @@ class _ImportWalletScreenState extends State<ImportWalletScreen> {
               const SizedBox(height: 10.0),
               TextField(
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+                    verificationText = value;
+                  });
                 },
                 decoration: const InputDecoration(
                   labelText: 'Enter Mnemonic Phrase',
@@ -62,7 +82,7 @@ class _ImportWalletScreenState extends State<ImportWalletScreen> {
                 width: double.infinity,
                 height: 30.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: verifyMnemonic,
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       const RoundedRectangleBorder(
