@@ -15,7 +15,7 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   String walletAddress = '';
-  String balance = '';
+  String balance = '0';
   String pvKey = '';
 
   @override
@@ -160,27 +160,32 @@ class _WalletPageState extends State<WalletPage> {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            const Column(
+                            Column(
                               children: [
                                 Card(
-                                  margin: EdgeInsets.all(16.0),
+                                  margin: const EdgeInsets.all(16.0),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(2.0),
+                                    ),
+                                  ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Sepolia ETH',
                                           style: TextStyle(
-                                            fontSize: 24.0,
+                                            fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
-                                          'Balance',
-                                          style: TextStyle(
-                                            fontSize: 24.0,
+                                          balance,
+                                          style: const TextStyle(
+                                            fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         )
@@ -190,7 +195,7 @@ class _WalletPageState extends State<WalletPage> {
                                 )
                               ],
                             ),
-                            SingleChildScrollView(),
+                            const SingleChildScrollView(),
                             Center(
                               child: ListTile(
                                 leading: const Icon(Icons.logout),
