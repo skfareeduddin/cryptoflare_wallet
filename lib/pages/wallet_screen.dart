@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/credentials.dart';
+import 'package:cryptoflare_wallet/utils/get_balance.dart';
+import 'package:web3dart/web3dart.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -36,6 +40,22 @@ class _WalletPageState extends State<WalletPage> {
       setState(() {
         walletAddress = address.hex;
         pvKey = privateKey;
+      });
+
+      String response = await getBalance(address.hex, 'sepolia');
+      dynamic data = json.decode(response);
+      String newBalance = data['balance'] ?? '0';
+
+      EtherAmount latestBalance = EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        BigInt.parse(newBalance),
+      );
+
+      String latestBalanceInEther =
+          latestBalance.getValueInUnit(EtherUnit.ether).toString();
+
+      setState(() {
+        balance = latestBalanceInEther;
       });
     }
   }
