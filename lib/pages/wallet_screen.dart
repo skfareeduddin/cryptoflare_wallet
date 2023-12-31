@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cryptoflare_wallet/components/nft_balances.dart';
+import 'package:cryptoflare_wallet/components/send_tokens.dart';
 import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,15 @@ class _WalletPageState extends State<WalletPage> {
                           elevation: MaterialStateProperty.all(3.0),
                           shadowColor: MaterialStateProperty.all(Colors.grey),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SendTokensScreen(privateKey: pvKey),
+                            ),
+                          );
+                        },
                         icon: const Icon(
                           Icons.send,
                           color: Colors.white,
@@ -204,7 +213,7 @@ class _WalletPageState extends State<WalletPage> {
                                           ),
                                         ),
                                         Text(
-                                          balance,
+                                          balance.substring(0, 4),
                                           style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
