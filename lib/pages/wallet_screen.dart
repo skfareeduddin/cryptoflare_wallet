@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cryptoflare_wallet/components/nft_balances.dart';
 import 'package:cryptoflare_wallet/pages/landing_screen.dart';
 import 'package:cryptoflare_wallet/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
@@ -215,7 +216,12 @@ class _WalletPageState extends State<WalletPage> {
                                 )
                               ],
                             ),
-                            const SingleChildScrollView(),
+                            SingleChildScrollView(
+                              child: NFTListPage(
+                                address: walletAddress,
+                                chain: 'sepolia',
+                              ),
+                            ),
                             Center(
                               child: ListTile(
                                 leading: const Icon(Icons.logout),
