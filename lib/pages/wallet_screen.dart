@@ -218,7 +218,7 @@ class _WalletPageState extends State<WalletPage> {
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
